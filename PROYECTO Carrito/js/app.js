@@ -5,8 +5,17 @@ const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const total = document.querySelector('#total').textContent;
 const precioTotal = document.querySelector('#precioTotal');
 let articulosCarrito = [];
+let calculo = 0;
+
 
 cargarListeners();
+cargarcursos();
+
+function cargarcursos() {
+
+    console.log(cargando);
+
+}
 
 function cargarListeners() {
     // Presionamos boton para agregar cursos
@@ -22,7 +31,7 @@ function cargarListeners() {
     });
 
     // Desaparecemos el total
-    total.remove();
+    //total.remove();
 }
 
 // Funciones
@@ -40,6 +49,7 @@ function eliminarCurso(e) {
         const curso_id = e.target.getAttribute('data-id');
         articulosCarrito = articulosCarrito.filter(curso => curso.id !== curso_id);
         carritoHtml();
+
     }
 }
 
@@ -48,10 +58,12 @@ function leerDatosCurso(curso) {
     const infoCurso = {
         imagen: curso.querySelector('img').src,
         titulo: curso.querySelector('h4').textContent,
-        precio: curso.querySelector('.precio span').textContent,
+        precio: curso.querySelector('.precio span .valor').textContent,
         id: curso.querySelector('a').getAttribute('data-id'),
         cantidad: 1
     }
+    calculo += parseInt(infoCurso.precio, 10);
+    //console.log(calculo);
 
     // Revisa si un elemento existe en el carrito
     const existe = articulosCarrito.some(curso => curso.id === infoCurso.id);
@@ -74,6 +86,7 @@ function leerDatosCurso(curso) {
     }
 
     carritoHtml();
+    mostrarTotal(calculo);
 }
 
 // Muestra el carrito de compras en el html (Llenarlo)
@@ -105,3 +118,10 @@ function LimpiarHtml() {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
     }
 }
+
+function mostrarTotal(total) {
+    precioTotal.innerHTML = `${total}`
+
+
+}
+//cu
